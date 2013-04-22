@@ -1,0 +1,14 @@
+{
+    "method":"query",
+    "scope":"entityset",
+    "action":"query",
+    "name":"products",
+    "query":{
+        "entityset":[{
+                "name":"products",
+                "conditions":{
+                }
+            }
+        ]
+    }
+}

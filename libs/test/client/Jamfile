@@ -1,0 +1,4 @@
+test-suite proxy_server_test :
+ [ so-test client_lib.test ]
+# [ sc-test proxy_server.test ] 
+ ;

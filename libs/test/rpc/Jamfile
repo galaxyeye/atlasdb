@@ -1,0 +1,3 @@
+test-suite ir_testing :
+    [ sc-test rpc.test ]
+    ;

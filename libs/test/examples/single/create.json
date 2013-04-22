@@ -1,0 +1,17 @@
+{
+    "method":"function",
+    "scope":"entityset",
+    "action":"create",
+    "name":"products",
+    "indexes":[{
+            "name":"id",
+            "type":"int",
+            "primary":"true"
+        },
+        {
+            "name":"provider_id",
+            "type":"int",
+            "primary":"false"
+        }
+    ]
+}

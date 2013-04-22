@@ -1,0 +1,8 @@
+#ifndef STORAGE_CONFIG_H_
+#define STORAGE_CONFIG_H_
+
+#ifndef STORAGE_VERSION
+#define STORAGE_VERSION 0.1
+#endif // !STORAGE_VERSION
+
+#endif // STORAGE_CONFIG_H_

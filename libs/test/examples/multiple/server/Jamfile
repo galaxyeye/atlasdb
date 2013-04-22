@@ -1,0 +1,6 @@
+
+test-suite ir_testing :
+    #[ sc-test server.test ]
+    #[ sc-test simple.test ]
+    [ sc-test multiserver.test ]
+    ;

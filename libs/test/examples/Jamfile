@@ -1,0 +1,7 @@
+test-suite example_testing :
+    [ sc-test dummy ]
+    [ sc-test shared_ptr_test ]
+
+# TODO: problem with the following test which is unexpected
+#    [ sc-test test_suite ]
+    ;

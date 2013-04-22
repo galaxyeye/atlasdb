@@ -1,0 +1,3 @@
+test-suite move_testing :
+    [ sc-test main.test ]
+    ;

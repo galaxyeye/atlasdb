@@ -1,0 +1,5 @@
+test-suite net_test :
+ [ sc-test data_node.test ] 
+# [ sc-test test_client.test ] 
+# [ sc-test catalog.test ] 
+ ;

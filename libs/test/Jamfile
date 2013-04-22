@@ -1,0 +1,3 @@
+test-suite database_testing :
+ [ sc-test database.test ] 
+ ;

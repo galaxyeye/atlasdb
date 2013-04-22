@@ -1,0 +1,4 @@
+test-suite singe_cs_testing :
+    [ net-run client ]
+    #[ net-run server ]
+    ;
