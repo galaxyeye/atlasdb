@@ -1,4 +1,4 @@
 atlasdb
 =======
 
-A graph database written in C++11
+A distributed in-memory graph database written in C++11
