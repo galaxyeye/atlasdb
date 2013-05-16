@@ -13,6 +13,8 @@
 namespace atlasdb {
   namespace storage {
 
+    using std::string;
+
     class storage_base {
 
     public:

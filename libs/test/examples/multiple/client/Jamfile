@@ -1,5 +1,0 @@
-
-test-suite ir_testing :
-    #[ sc-test client.test ]
-    [ sc-test session.test ]
-    ;

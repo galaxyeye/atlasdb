@@ -5,8 +5,8 @@
  *      Author: vincent
  */
 
-#ifndef atlasdb_QUERY_PARSER_H_
-#define atlasdb_QUERY_PARSER_H_
+#ifndef ATLASDB_QUERY_PARSER_H_
+#define ATLASDB_QUERY_PARSER_H_
 
 namespace atlasdb {
   namespace query {

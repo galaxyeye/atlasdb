@@ -17,10 +17,10 @@ namespace atlasdb {
       typedef storage_base base_type;
       typedef basic_index<Key, Value, Ikey>  self_type;
 
-      typedef typename Ikey index_key_type;
-      typedef typename Key index_value_type;
-      typedef typename std::pair<index_key_type, index_value_type> index_node_type;
-      typedef typename std::less<index_key_type> index_key_compare;
+      typedef Ikey index_key_type;
+      typedef Key index_value_type;
+      typedef std::pair<index_key_type, index_value_type> index_node_type;
+      typedef std::less<index_key_type> index_key_compare;
 
     public:
 
@@ -50,10 +50,10 @@ namespace atlasdb {
 
     public:
 
-      typedef btree_map<Key, Value>::iterator iterator;
-      typedef btree_map<Key, Value>::const_iterator const_iterator;
-      typedef btree_map<Key, Value>::reverse_iterator reverse_iterator;
-      typedef btree_map<Key, Value>::const_reverse_iterator const_reverse_iterator;
+      typedef typename btree_map<index_key_type, index_value_type>::iterator iterator;
+      typedef typename btree_map<index_key_type, index_value_type>::const_iterator const_iterator;
+      typedef typename btree_map<index_key_type, index_value_type>::reverse_iterator reverse_iterator;
+      typedef typename btree_map<index_key_type, index_value_type>::const_reverse_iterator const_reverse_iterator;
 
       bool empty() const;
       iterator find(const index_key_type& key);

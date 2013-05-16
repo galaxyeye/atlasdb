@@ -9,40 +9,67 @@
 #define QUERY_MANIPULATOR_H_
 
 #include <string>
-#include <vector>
+#include <sstream>
 
 #include <atlasdb/query/storage.h>
 
 namespace atlasdb {
   namespace query {
 
+    using std::string;
+    using std::stringstream;
+    using std::stringbuf;
+
     class stomanip {
     public:
 
-      static void count(const string& table) {
-        repository storage;
+      static size_t count(const string& table) {
+        repository storage(table);
         return storage.count();
       }
 
-      static void load();
+      static stringbuf load(const string& table, size_t start = 0, size_t limit = 100) {
+        stringstream ss;
 
-      static void load_by_pkey(const string& table, const string& pkey);
+        repository storage(table);
 
-      static void load_by_key(const string& table, const string& index, const string& pkey);
+        size_t scan_count = 0;
+        size_t load_count = 0;
 
-      static void load_field_by_pkey(const string& table, const string& pkey);
+        ss << 0;
+        for (auto it = storage.begin(); it != storage.end(); ++it) {
+          if (scan_count < start) ++scan_count;
+          else if (load_count <= limit) {
+            ss.write(it->second.address(), it->second.size());
+            ++load_count;
+          }
+        }
 
-      static void load_field_by_key(const string& table, const string& index, const string& pkey);
+        // ss.rdbuf()->
+        return ss.rdbuf();
+      }
 
-      static void update_by_pkey(const string& table, const string& pkey);
-      static void update_by_key(const string& table, const string& index, const string& pkey);
-      static void update_field_by_pkey(const string& table, const string& pkey);
-      static void update_field_by_key(const string& table, const string& index, const string& pkey);
+      static stringbuf load_by_pkey(const string& table, const string& pkey);
 
-      static void insert_key_value(const string& table, const string& pkey);
+      static stringbuf load_by_key(const string& table, const string& index, const string& pkey);
 
-      static void remove_by_pkey();
-      static void remove_by_key();
+      static stringbuf load_field_by_pkey(const string& table, const string& pkey);
+
+      static stringbuf load_field_by_key(const string& table, const string& index, const string& pkey);
+
+      static stringbuf update_by_pkey(const string& table, const string& pkey);
+
+      static stringbuf update_by_key(const string& table, const string& index, const string& pkey);
+
+      static stringbuf update_field_by_pkey(const string& table, const string& pkey);
+
+      static stringbuf update_field_by_key(const string& table, const string& index, const string& pkey);
+
+      static stringbuf insert_key_value(const string& table, const string& pkey);
+
+      static stringbuf remove_by_pkey();
+
+      static stringbuf remove_by_key();
     };
 
   } // query

@@ -1,5 +1,5 @@
-#ifndef BASIC_INDEXER_H_
-#define BASIC_INDEXER_H_
+#ifndef ATLASDB_STORAGE_BASIC_INDEXER_H_
+#define ATLASDB_STORAGE_BASIC_INDEXER_H_
 
 #include <string>
 #include <map>
@@ -9,37 +9,39 @@
 #include <algorithm>
 
 #include <atlasdb/storage/storage_error.h>
-#include <atlasdb/storage/basic_index.h>
 #include <atlasdb/storage/storage_base.h>
+#include <atlasdb/storage/basic_index.h>
 
 namespace atlasdb {
   namespace storage {
-    class error_code;
 
-    template<typename Key, typename Value, typename IndexKey>
-    class basic_indexer: virtual public storage_base {
+    template<typename Key, typename Value, typename IKey>
+    class basic_indexer : virtual public storage_base {
     public:
 
-      typedef basic_indexer<Key, Value, IndexKey> self;
-      typedef storage_base<Key, Value, IndexKey> base;
-      typedef basic_index<Key, Value, IndexKey> index;
+      typedef basic_indexer<Key, Value, IKey> self_type;
+      // typedef storage_base<Key, Value, IKey> base_type;
 
-      typedef typename Key key_type;
-      typedef typename Value value_type;
-      typedef typename std::pair<key_type, value_type> node_type;
-      typedef typename std::less<key_type> key_compare;
+      typedef basic_index<Key, Value, IKey> index;
 
-      typedef typename IndexKey index_key_type;
-      typedef typename Key index_value_type;
-      typedef typename std::pair<index_key_type, index_value_type> index_node_type;
-      typedef typename std::less<index_key_type> index_key_compare;
+      typedef Key key_type;
+      typedef Value value_type;
+      typedef std::pair<key_type, value_type> node_type;
+      typedef std::less<key_type> key_compare;
 
-      typedef typename size_t identifier;
+      typedef IKey index_key_type;
+      typedef Key index_value_type;
+      typedef std::pair<index_key_type, index_value_type> index_node_type;
+      typedef std::less<index_key_type> index_key_compare;
+
+      typedef size_t identifier;
       typedef size_t size_type;
 
     public:
 
-      basic_indexer() : base() {}
+      basic_indexer() {}
+
+      basic_indexer(const string& name) : storage_base(name) {}
 
       virtual ~basic_indexer() { close(); }
 
@@ -51,7 +53,7 @@ namespace atlasdb {
       static void create(InputIterator first, InputIterator last) {
         typedef typename InputIterator::value_type value_type;
         std::for_each(first, last, [](const value_type& name) {
-          self::create(name);
+          self_type::create(name);
         });
       }
 
@@ -67,12 +69,17 @@ namespace atlasdb {
       template<class InputIterator>
       static void drop(InputIterator first, InputIterator last) {
         typedef typename InputIterator::value_type value_type;
-        std::for_each(first, last, [&env](const value_type& name) {
-          self::drop(env, name);
+        std::for_each(first, last, [](const value_type& name) {
+          self_type::drop(name);
         });
       }
 
     public:
+
+      /**
+       * open an index for a specified key
+       */
+      index& open(const std::string& name);
 
       /**
        * open an index with an arithmetic range, one of the following cases:
@@ -93,19 +100,9 @@ namespace atlasdb {
           bool open = true, const index_key_type& upper = index_key_type::nil,
           bool open2 = true);
 
-      /**
-       * open an index for a specified key
-       */
-      index& open(const std::string& name);
+      index& operator[](const std::string& name) { return _indexes[name]; }
 
-      index& open(const std::string& name, const index_key_type& lower, bool open = true,
-          const index_key_type& upper = index_key_type::nil, bool open2 = true);
-
-      index& open(const std::string& name);
-
-      index& operator[](const std::string& name);
-
-      index& at(const std::string& name);
+      index& at(const std::string& name) { return _indexes.at(name); }
 
       /**
        * close an open index
@@ -113,7 +110,7 @@ namespace atlasdb {
       virtual void close(index& index);
 
       /**
-       * close all open index
+       * close all open indexes
        * */
       virtual void close();
 
@@ -158,7 +155,8 @@ namespace atlasdb {
 
       std::multimap<std::string, index> _indexes;
     };
+
   } // storage
 } // atlasdb
 
-#endif // BASIC_INDEXER_H_
+#endif // ATLASDB_STORAGE_BASIC_INDEXER_H_

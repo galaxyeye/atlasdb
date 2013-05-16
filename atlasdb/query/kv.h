@@ -5,8 +5,8 @@
  *      Author: vincent
  */
 
-#ifndef atlasdb_KEY_VALUE_H_
-#define atlasdb_KEY_VALUE_H_
+#ifndef ATLASDB_QUERY_KEY_VALUE_H_
+#define ATLASDB_QUERY_KEY_VALUE_H_
 
 #include <utility> // pair
 #include <string>
@@ -20,6 +20,8 @@ namespace atlasdb {
     class key {
     public:
 
+      key() {}
+      key(std::nullptr_t); // nil key
       key(const char* k, size_t sz);
       key(const string& k);
       key(const key&);
@@ -33,8 +35,8 @@ namespace atlasdb {
       void data(const char* k, size_t sz);
       const char* address() const;
 
-      constexpr size_t size() const;
-      constexpr size_t capacity() const;
+      size_t size() const;
+      size_t capacity() const;
 
     public:
 
@@ -43,11 +45,13 @@ namespace atlasdb {
     private:
     };
 
-    static const key key::nil;
+    const key key::nil;
 
     class value {
     public:
 
+      value() {}
+      value(std::nullptr_t); // nil key
       value(const char* k, size_t sz);
       value(const string& k);
       value(const value&);
@@ -60,19 +64,20 @@ namespace atlasdb {
       void data(const char* k, size_t sz);
       const char* address() const;
 
-      constexpr size_t size() const;
-      constexpr size_t capacity() const;
+      size_t size() const;
+      size_t capacity() const;
 
     public:
 
       static const value nil;
     };
 
-    static const value value::nil;
+    const value value::nil;
 
     class ikey : public key {
     };
-  } // storage
+
+  } // query
 } // atlasdb
 
-#endif /* atlasdb_KEY_VALUE_H_ */
+#endif /* ATLASDB_QUERY_KEY_VALUE_H_ */

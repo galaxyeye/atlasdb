@@ -5,8 +5,8 @@
  *      Author: vincent
  */
 
-#ifndef atlasdb_STORAGE_GRAPH_H_
-#define atlasdb_STORAGE_GRAPH_H_
+#ifndef ATLASDB_STORAGE_GRAPH_H_
+#define ATLASDB_STORAGE_GRAPH_H_
 
 #include <boost/graph/adjacency_list.hpp>
 
@@ -17,23 +17,16 @@ namespace atlasdb {
 
     typedef double EdgeWeight;
 
-    typedef boost::adjacency_list
-    <
-      boost::vecS,
-      boost::vecS,
-      boost::bidirectionalS,
-      VertexInfo,
-      EdgeInfo
-    > Graph;
+    typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS> Graph;
 
-    #define GRAPH_WEIGHTMAP(G) get(&EdgeInfo::weight, G)
-    typedef boost::property_map<Graph, EdgeWeight EdgeInfo::*>::type weightmap_type;
-
-    #define GRAPH_INDEXMAP(G)  get(vertex_index, G)
-    typedef boost::property_map<Graph, vertex_index_t>::type indexmap_type;
-
-    #define GRAPH_IDMAP(G)     get(&VertexInfo::id, G)
-    typedef boost::property_map<Graph, VertexID VertexInfo::*>::type idmap_type;
+//    #define GRAPH_WEIGHTMAP(G) get(&EdgeInfo::weight, G)
+//    typedef boost::property_map<Graph, EdgeWeight EdgeInfo::*>::type weightmap_type;
+//
+//    #define GRAPH_INDEXMAP(G)  get(vertex_index, G)
+//    typedef boost::property_map<Graph, vertex_index_t>::type indexmap_type;
+//
+//    #define GRAPH_IDMAP(G)     get(&VertexInfo::id, G)
+//    typedef boost::property_map<Graph, VertexID VertexInfo::*>::type idmap_type;
 
     class cursor {};
 
@@ -85,11 +78,11 @@ namespace atlasdb {
       int fetch_row(row&, const void*) throw ();
       void row_ref(void*) throw ();
 
-      static oqgraph* create(oqgraph_share*) throw ();
-      static oqgraph_share *create() throw ();
-
-      static void free(oqgraph*) throw ();
-      static void free(oqgraph_share*) throw ();
+//      static oqgraph* create(oqgraph_share*) throw ();
+//      static oqgraph_share *create() throw ();
+//
+//      static void free(oqgraph*) throw ();
+//      static void free(oqgraph_share*) throw ();
 
       static const size_t sizeof_ref;
     };
@@ -97,4 +90,4 @@ namespace atlasdb {
   } // storage
 } // atlasdb
 
-#endif /* atlasdb_STORAGE_GRAPH_H_ */
+#endif /* ATLASDB_STORAGE_GRAPH_H_ */

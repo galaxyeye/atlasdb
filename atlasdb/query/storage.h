@@ -1,8 +1,11 @@
-#ifndef atlasdb_QUERY_STORAGE_FWD_H_
-#define atlasdb_QUERY_STORAGE_FWD_H_
+#ifndef ATLASDB_QUERY_STORAGE_FWD_H_
+#define ATLASDB_QUERY_STORAGE_FWD_H_
 
 #include <memory>
+
 #include <atlasdb/query/kv.h>
+#include <atlasdb/storage/basic_index.h>
+#include <atlasdb/storage/basic_repository.h>
 #include <atlasdb/storage/basic_storehouse.h>
 
 namespace atlasdb {
@@ -17,7 +20,8 @@ namespace atlasdb {
     typedef std::shared_ptr<indexer> indexer_ptr;
     typedef std::shared_ptr<repository> repository_ptr;
     typedef std::shared_ptr<storehouse> storehouse_ptr;
+
   } // query
 } // atlasdb
 
-#endif // atlasdb_QUERY_STORAGE_FWD_H_
+#endif // ATLASDB_QUERY_STORAGE_FWD_H_

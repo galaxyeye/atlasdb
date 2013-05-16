@@ -5,12 +5,12 @@
  *      Author: vincent
  */
 
-#ifndef ATLASDB_QUERY_TRANSLATOR_H_
-#define ATLASDB_QUERY_TRANSLATOR_H_
+#ifndef ATLASDB_QUERY_IR_BUILDER_H_
+#define ATLASDB_QUERY_IR_BUILDER_H_
 
 #include <boost/property_tree/ptree.hpp>
-#include <atlasdb/query/ir.h>
-#include <atlasdb/query/ir_tree.h>
+
+#include <atlasdb/query/query_fwd.h>
 
 namespace atlasdb {
   namespace query {

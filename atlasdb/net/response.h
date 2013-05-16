@@ -5,54 +5,35 @@
  *      Author: vincent
  */
 
-#ifndef RESPONSE_H_
-#define RESPONSE_H_
+#ifndef ATLAS_NET_RESPONSE_H_
+#define ATLAS_NET_RESPONSE_H_
 
-#include <string>
+#include <boost/asio/streambuf.hpp>
+#include <boost/asio/ip/tcp.hpp>
+
+#include <atlasdb/net/net_fwd.h>
+#include <atlasdb/net/message.h>
 
 namespace atlasdb {
   namespace net {
 
-    using std::string;
-    using boost::property_tree::basic_ptree;
-
-    // forward declaration
-    class request;
-    class result_buffer_ptr;
+    namespace asio = boost::asio;
+    using asio::ip::tcp;
 
     class response {
     public:
 
-      response() {}
+      response(const tcp::endpoint& endpoint) : _endpoint(endpoint) {}
 
-      ~response() {}
-
-      request request() const {
-        return _request;
-      }
-
-      result_buffer_ptr result_buffer() const {
-        return _result_buffer;
-      }
+      const tcp::endpoint& endpoint() const { return _endpoint; }
 
     private:
-      // hold the query cson buffer
-      const char* _query_buffer;
-      size_t _query_size;
 
-      request _request;
-
-      result_buffer_ptr _result_buffer;
-
-      bool _is_inner_request;
-
-      string _connection_id;
-      string _client_ip;
-
-      size_t _tenement_id;
-      size_t _transaction_id;
+      tcp::endpoint _endpoint;
+      asio::streambuf _message;
     };
-  } // db
+
+  } // net
 } // atlasdb
 
-#endif /* RESPONSE_H_ */
+#endif /* ATLAS_NET_RESPONSE_H_ */

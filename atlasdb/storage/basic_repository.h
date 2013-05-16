@@ -1,11 +1,11 @@
-#ifndef BASIC_REPOSITORY_H_
-#define BASIC_REPOSITORY_H_
+#ifndef ATLASDB_STORAGE_BASIC_REPOSITORY_H_
+#define ATLASDB_STORAGE_BASIC_REPOSITORY_H_
 
 #include <atlasdb/storage/btree/btree_map.h>
 
 #include <atlasdb/storage/storage_base.h>
-#include <atlasdb/storage/basic_environment.h>
-#include <atlasdb/storage/basic_transaction.h>
+//#include <atlasdb/storage/basic_environment.h>
+//#include <atlasdb/storage/basic_transaction.h>
 
 namespace atlasdb {
   class raw_block;
@@ -25,10 +25,10 @@ namespace atlasdb {
     class basic_repository : virtual public storage_base {
     public:
 
-      typedef typename Key key_type;
-      typedef typename Value value_type;
-      typedef typename std::pair<key_type, value_type> node_type;
-      typedef typename std::less<key_type> key_compare;
+      typedef Key key_type;
+      typedef Value value_type;
+      typedef std::pair<key_type, value_type> node_type;
+      typedef std::less<key_type> key_compare;
 
       typedef size_t identifier;
 
@@ -44,8 +44,7 @@ namespace atlasdb {
 
       basic_repository() = default;
 
-      basic_repository(const string& table) :
-          base(table) {
+      basic_repository(const string& table) : storage_base(table) {
         open(table);
       }
 
@@ -81,10 +80,10 @@ namespace atlasdb {
       // the first <buf, sz> pair is the key and the second one is the value
       bool put(void* buf, size_t sz, void* buf2, size_t sz2);
 
-      template<class Key, class Data>
-      bool put(const Key& key, const Data& data) {
-        rd_wrapper<Key> rk(key);
-        rd_wrapper<Data> rd(data);
+      template<class Key2, class Value2>
+      bool put(const Key2& key, const Value2& data) {
+        rd_wrapper<Key2> rk(key);
+        rd_wrapper<Value2> rd(data);
         return put(rk.address(), rk.size(), rd.address(), rd.size());
       }
 
@@ -167,62 +166,36 @@ namespace atlasdb {
       // Note : A storage must be an associated container just like
       // std::map, so the iterator interface can refers to std::map iterator
       // and berkeley db provider something similar
-      typedef btree_map<key_type, value_type>::iterator iterator;
-      typedef btree_map<key_type, value_type>::const_iterator const_iterator;
-      typedef btree_map<key_type, value_type>::reverse_iterator reverse_iterator;
-      typedef btree_map<key_type, value_type>::const_reverse_iterator const_reverse_iterator;
+      typedef typename btree_map<key_type, value_type>::iterator iterator;
+      typedef typename btree_map<key_type, value_type>::const_iterator const_iterator;
+      typedef typename btree_map<key_type, value_type>::reverse_iterator reverse_iterator;
+      typedef typename btree_map<key_type, value_type>::const_reverse_iterator const_reverse_iterator;
 
-      bool empty() const {
-        return _container.empty();
-      }
+      bool empty() const { return _container.empty(); }
 
-      iterator begin() {
-        return _container.begin();
-      }
+      iterator begin() { return _container.begin(); }
 
-      const_iterator begin() const {
-        return _container.begin();
-      }
+      const_iterator begin() const { return _container.begin(); }
 
-      iterator end() {
-        return _container.end();
-      }
+      iterator end() { return _container.end(); }
 
-      const_iterator end() const {
-        return _container.end();
-      }
+      const_iterator end() const { return _container.end(); }
 
-      reverse_iterator rbegin() {
-        return _container.rbegin();
-      }
+      reverse_iterator rbegin() { return _container.rbegin(); }
 
-      const_reverse_iterator rbegin() const {
-        return _container.rbegin();
-      }
+      const_reverse_iterator rbegin() const { return _container.rbegin(); }
 
-      reverse_iterator rend() {
-        return _container.rbegin();
-      }
+      reverse_iterator rend() { return _container.rbegin(); }
 
-      const_reverse_iterator rend() const {
-        return _container.rend();
-      }
+      const_reverse_iterator rend() const { return _container.rend(); }
 
-      value_type front() {
-        return _container.front();
-      }
+      value_type front() { return _container.front(); }
 
-      const value_type front() const {
-        return _container.front();
-      }
+      const value_type front() const { return _container.front(); }
 
-      value_type back() {
-        return _container.back();
-      }
+      value_type back() { return _container.back(); }
 
-      const value_type back() const {
-        return _container.back();
-      }
+      const value_type back() const { return _container.back(); }
 
     private:
 
@@ -232,4 +205,4 @@ namespace atlasdb {
   } // storage
 } // atlasdb
 
-#endif // BASIC_STORAGE_H_
+#endif // ATLASDB_STORAGE_BASIC_REPOSITORY_H_

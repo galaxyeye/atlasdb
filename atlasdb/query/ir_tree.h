@@ -5,10 +5,12 @@
  *      Author: vincent
  */
 
-#ifndef IR_TREE_H_
-#define IR_TREE_H_
+#ifndef ATLASDB_QUERY_IR_TREE_H_
+#define ATLASDB_QUERY_IR_TREE_H_
 
 #include <boost/graph/adjacency_list.hpp>
+
+#include <atlasdb/query/query_fwd.h>
 
 namespace atlasdb {
   namespace query {
@@ -17,9 +19,9 @@ namespace atlasdb {
 
     node nodes[] = { node, table, logic_and, logic_or, operation };
 
-    typedef boost::adjacency_list<boost::mapS, boost::vecS, boost::directedS> ir_tree;
+    typedef boost::adjacency_list<boost::mapS, boost::vecS> ir_tree;
 
   } // query
 } // atlasdb
 
-#endif /* IR_TREE_H_ */
+#endif /* ATLASDB_QUERY_IR_TREE_H_ */

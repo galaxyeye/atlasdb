@@ -1,21 +1,21 @@
 /*
- * ir_processor.h
+ * processor.h
  *
  *  Created on: Apr 14, 2013
  *      Author: vincent
  */
 
-#ifndef IR_PROCESSOR_H_
-#define IR_PROCESSOR_H_
+#ifndef ATLASDB_QUERY_IR_PROCESSOR_H_
+#define ATLASDB_QUERY_IR_PROCESSOR_H_
 
 #include <string>
 #include <algorithm>
 
-#include <boost/mpl/at.hpp>
-#include <boost/fusion/sequence.hpp>
-#include <boost/fusion/container/map.hpp>
-#include <boost/fusion/algorithm.hpp>
-#include <boost/fusion/support/pair.hpp>
+// #include <boost/mpl/at.hpp>
+//#include <boost/fusion/sequence.hpp>
+//#include <boost/fusion/container/map.hpp>
+//#include <boost/fusion/algorithm.hpp>
+//#include <boost/fusion/support/pair.hpp>
 
 #include <atlas/mpl/at_path.h>
 #include <atlas/graph/tree.h>
@@ -174,4 +174,4 @@ namespace atlasdb {
   } // query
 } // atlasdb
 
-#endif /* IR_PROCESSOR_H_ */
+#endif /* ATLASDB_QUERY_IR_PROCESSOR_H_ */

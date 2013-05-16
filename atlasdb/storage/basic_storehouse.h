@@ -1,11 +1,19 @@
-#ifndef BASIC_STOREHOUSE_H_
-#define BASIC_STOREHOUSE_H_
+#ifndef ATLASDB_STORAGE_BASIC_STOREHOUSE_H_
+#define ATLASDB_STORAGE_BASIC_STOREHOUSE_H_
+
+#include <string>
+#include <vector>
+#include <map>
+#include <utility>
+#include <functional>
 
 #include <atlasdb/storage/basic_repository.h>
 #include <atlasdb/storage/basic_indexer.h>
 
 namespace atlasdb {
   namespace storage {
+
+    using std::string;
 
     /*
      * A IndexedStorage presents a large local pool of carefully organized
@@ -26,25 +34,25 @@ namespace atlasdb {
       typedef basic_indexer<Key, Value, Ikey> indexer;
       typedef basic_index<Key, Value, Ikey> index;
 
-      typedef typename Key key_type;
-      typedef typename Value value_type;
-      typedef typename std::pair<key_type, value_type> node_type;
-      typedef typename std::less<key_type> key_compare;
+      typedef Key key_type;
+      typedef Value value_type;
+      typedef std::pair<key_type, value_type> node_type;
+      typedef std::less<key_type> key_compare;
 
-      typedef typename Ikey index_key_type;
-      typedef typename Key index_value_type;
-      typedef typename std::pair<index_key_type, index_value_type> index_node_type;
-      typedef typename std::less<index_key_type> index_key_compare;
+      typedef Ikey index_key_type;
+      typedef Key index_value_type;
+      typedef std::pair<index_key_type, index_value_type> index_node_type;
+      typedef std::less<index_key_type> index_key_compare;
 
       typedef std::vector<key_type> keyset; // use vector instead of set for better performance
       typedef std::vector<index_key_type> ikeyset; // use vector instead of set for better performance
-      typedef std::map<string, ikey_set> named_ikeyset;
+      typedef std::map<string, ikeyset> named_ikeyset;
 
       typedef size_t identifier;
 
     public:
 
-      basic_storehouse(const string name);
+      basic_storehouse(const string name) : repository(name), indexer(name) {}
 
       basic_storehouse(const string name, const std::vector<string>& indexes);
 
@@ -57,11 +65,11 @@ namespace atlasdb {
       virtual void close();
 
       /**
-       * insert a data node to the storage, all relative indexes are also updated
+       * insert a value node to the storage, all relative indexes are also updated
        */
-      void put(const key_type& key, const data_type& data, const named_ikeyset& ikeys);
+      void put(const key_type& key, const value_type& value, const named_ikeyset& ikeys);
 
-      void put(const value_type& node, const named_ikeyset& ikeys);
+      void put(const node_type& node, const named_ikeyset& ikeys);
 
       /**
        * @delay, i am not sure to provider such method
@@ -76,23 +84,17 @@ namespace atlasdb {
       void put(const Node& node);
 
       /**
-       * update a data node in the storage, all relative indexes are also updated
+       * update a value node in the storage, all relative indexes are also updated
        */
-      void update(const key_type& key, const data_type& data, const named_ikeyset& ikeys);
+      void update(const key_type& key, const value_type& value, const named_ikeyset& ikeys);
 
-      void update(const value_type& value, const named_ikeyset& ikeys);
+      void update(const node_type& node, const named_ikeyset& ikeys);
 
       template<class Key2, class Value2>
-      void update(const Key2& key, const Value2& data);
+      void update(const Key2& key, const Value2& value);
 
       template<class Key2, class Value2>
       void update(const Key2& key, const Key2& new_key, const Value2& new_data);
-
-      /**
-       * @delay, i am not sure to provider such method
-       */
-      template<class Key, class Node>
-      void update(const Key& key, const Node& node);
 
       /**
        * delete an existing data node in the storage, all relative indexes
@@ -102,9 +104,9 @@ namespace atlasdb {
 
     private:
 
-      std::error_code err_code(atlasdb::storage::errc e) {
-        return std::error_code(static_cast<int>(e), storage_error_category::instance());
-      }
+//      std::error_code err_code(atlasdb::storage::errc e) {
+//        // return std::error_code(static_cast<int>(e), storage_error_category::instance());
+//      }
     };
 
   } // storage

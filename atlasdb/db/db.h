@@ -5,14 +5,13 @@
  *      Author: vincent
  */
 
-#ifndef atlasdb_DB_DB_H_
-#define atlasdb_DB_DB_H_
+#ifndef ATLASDB_DB_DB_H_
+#define ATLASDB_DB_DB_H_
 
 #include <string>
 #include <memory>
 
-#include <atlasdb/db/context.h>
-#include <atlasdb/query/engine.h>
+#include <boost/property_tree/ptree.hpp>
 
 namespace atlasdb {
   namespace db {
@@ -20,56 +19,30 @@ namespace atlasdb {
     using std::string;
     using boost::property_tree::ptree;
 
-    struct db_data {
-      query::engine_ptr engine;
-    };
+    namespace query {
+      class engine_ptr;
+    }
+
+    namespace {
+      class __db;
+    }
 
     class db {
     public:
 
       db() {}
-
       db(std::nullptr_t) {}
-
       db(db&& db) : _pimpl(std::move(db._pimpl)) {}
 
     public:
 
-      // api for es
-      /*
-       * Indicate whether the given table exists
-       * */
       bool exists(const string& table);
-
-      /*
-       * Create an empty table
-       * */
       void create(const string& table);
       void create(const string& table, const std::vector<string>& indexes);
-
-      /*
-       * Drop an table, including all indexes
-       * */
       void drop(const string& table);
-
-      /*
-       * Make an table empty
-       * */
       void truncate(const string& table);
-
-      /*
-       * Make a duplication
-       * */
       void duplicate(const string& table, const string& new_es);
-
-      /*
-       * Check for errors, reserved
-       * */
       bool validate(const string& table);
-
-      /**
-       * Repair the table if possible, reserved
-       * */
       void repair(const string& table);
 
       void count(const string& table);
@@ -89,17 +62,18 @@ namespace atlasdb {
       void update_field_by_key(const string& table, const string& index, const string& pkey);
 
       void insert(const ptree& q);
-      void insert_key_value(const string& table, const string& pkey);
+      void insert_pkey_value(const string& table, const string& pkey, const string& value);
 
       void remove(const ptree& q);
-      void remove_by_pkey();
-      void remove_by_key();
+      void remove_by_pkey(const string& table, const string& pkey);
+      void remove_by_key(const string& table, const string& index, const string& key);
 
     private:
 
-      std::shared_ptr<db_data> _pimpl;
+      std::shared_ptr<__db> _pimpl;
     };
+
   } // db
 } // atlasdb
 
-#endif // atlasdb_DB_DB_H_
+#endif // ATLASDB_DB_DB_H_

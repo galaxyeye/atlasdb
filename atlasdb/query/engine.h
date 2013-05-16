@@ -1,5 +1,12 @@
-#ifndef QUERY_ENGINE_H_
-#define QUERY_ENGINE_H_
+/*
+ * engine.h
+ *
+ *  Created on: Apr 12, 2013
+ *      Author: vincent
+ */
+
+#ifndef ATLASDB_ENGINE_QUERY_ENGINE_H_
+#define ATLASDB_ENGINE_QUERY_ENGINE_H_
 
 #include <string>
 #include <memory>
@@ -52,8 +59,6 @@ namespace atlasdb {
 
       ir_tree _ir;
     };
-
-    typedef std::shared_ptr<engine> engine_ptr;
 
   } // query
 } // atlasdb

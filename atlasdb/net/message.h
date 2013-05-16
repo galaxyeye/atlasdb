@@ -5,8 +5,8 @@
  *      Author: vincent
  */
 
-#ifndef atlasdb_NET_MESSAGE_H_
-#define atlasdb_NET_MESSAGE_H_
+#ifndef ATLASDB_NET_MESSAGE_H_
+#define ATLASDB_NET_MESSAGE_H_
 
 #include <cstdio>
 #include <cstdlib>
@@ -68,4 +68,4 @@ namespace atlasdb {
 
   }
 }
-#endif /* MESSAGE_H_ */
+#endif /* ATLASDB_NET_MESSAGE_H_ */

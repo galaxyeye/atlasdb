@@ -10,11 +10,14 @@
  *  queries performs.
  */
 
-#ifndef QUERY_IR_H_
-#define QUERY_IR_H_
+#ifndef ATLASDB_QUERY_IR_H_
+#define ATLASDB_QUERY_IR_H_
 
-#include <algorithm>
 #include <set>
+#include <string>
+#include <algorithm>
+
+#include <atlasdb/query/storage.h>
 
 namespace atlasdb {
   namespace query {
