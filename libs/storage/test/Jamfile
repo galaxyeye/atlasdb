@@ -1,0 +1,3 @@
+exe btree : btree.cpp ;
+exe storage : storage.cpp ;
+
